@@ -55,3 +55,12 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
+
+mybatis-plus:
+  # classpath后加*表示是web项目，不带表示是文件项目
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #配置sql打印日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    aggressive-lazy-loading: true
+    lazy-loading-enabled: true

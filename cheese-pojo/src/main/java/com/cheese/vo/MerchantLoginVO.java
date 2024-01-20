@@ -16,7 +16,8 @@ import java.io.Serializable;
 public class MerchantLoginVO implements Serializable
 {
     @Schema(description = "商户Id")
-    private Long id;
+    @TableId(value = "id", type = IdType.AUTO)
+private Long id;
 
     @Schema(description = "商户用户名")
     private String userName;

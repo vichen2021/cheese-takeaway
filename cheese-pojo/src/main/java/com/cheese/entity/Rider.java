@@ -1,5 +1,7 @@
 package com.cheese.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class Rider implements Serializable
 {
     // 用户ID
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     // 用户姓名
@@ -39,6 +42,7 @@ public class Rider implements Serializable
     private Integer status;
 
     // 删除标记，null 正常 非空 已删除
+    @TableId("is_delete")
     private LocalDateTime isDelete;
 
     // 创建时间

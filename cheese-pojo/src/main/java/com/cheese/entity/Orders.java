@@ -1,5 +1,7 @@
 package com.cheese.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Orders implements Serializable {
+public class Orders implements Serializable
+{
 
     /**
      * 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
@@ -37,6 +40,7 @@ public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     //订单号
@@ -109,6 +113,7 @@ public class Orders implements Serializable {
     private Integer tablewareStatus;
 
     // 删除标记，null 正常 非空 已删除
+    @TableId("is_delete")
     private LocalDateTime isDelete;
 
     // 创建时间
