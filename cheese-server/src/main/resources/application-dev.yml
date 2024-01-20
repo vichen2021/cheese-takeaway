@@ -1,0 +1,8 @@
+cheese:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    host: localhost
+    port: 5432
+    database: cheese
+    username: postgres
+    password: 123456
