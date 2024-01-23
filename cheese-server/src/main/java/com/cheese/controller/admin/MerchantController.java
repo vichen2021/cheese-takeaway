@@ -1,10 +1,9 @@
 package com.cheese.controller.admin;
 
 import com.cheese.constant.JwtClaimsConstant;
-import com.cheese.constant.PasswordConstant;
-import com.cheese.constant.StatusConstant;
 import com.cheese.dto.MerchantDTO;
 import com.cheese.dto.MerchantLoginDTO;
+import com.cheese.dto.MerchantPageQueryDTO;
 import com.cheese.entity.Merchant;
 import com.cheese.properties.JwtProperties;
 import com.cheese.result.Result;
@@ -14,12 +13,8 @@ import com.cheese.vo.MerchantLoginVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,5 +79,12 @@ public class MerchantController
         log.info("添加商户：{}",merchantDTO);
         merchantService.addMerchant(merchantDTO);
         return Result.success();
+    }
+
+    @GetMapping("/page")
+    @Operation(summary = "商户分页查询")
+    public Result page(MerchantPageQueryDTO merchantPageQueryDTO){
+        log.info("商户分页查询，{}",merchantPageQueryDTO);
+        return Result.success(merchantService.pageQuery(merchantPageQueryDTO));
     }
 }

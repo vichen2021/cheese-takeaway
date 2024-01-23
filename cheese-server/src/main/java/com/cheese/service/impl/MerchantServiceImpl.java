@@ -1,14 +1,20 @@
 package com.cheese.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.constant.*;
 import com.cheese.context.BaseContext;
 import com.cheese.dto.MerchantDTO;
 import com.cheese.dto.MerchantLoginDTO;
+import com.cheese.dto.MerchantPageQueryDTO;
 import com.cheese.entity.Merchant;
 import com.cheese.exception.*;
 import com.cheese.mapper.MerchantMapper;
+import com.cheese.result.PageResult;
 import com.cheese.service.MerchantService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +79,29 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
         merchant.setCreateUser(BaseContext.getCurrentId());//TODO 目前写个假数据，后期修改
         merchant.setUpdateUser(BaseContext.getCurrentId());
 
-       return save(merchant);
+       return this.save(merchant);
     }
+
+    /**
+     * 商户分页查询
+     * @param merchantPageQueryDTO
+     * @return
+     */
+    @Override
+    public IPage<Merchant> pageQuery(MerchantPageQueryDTO merchantPageQueryDTO)
+    {
+        String content = merchantPageQueryDTO.getContent();
+        return this.page(
+                new Page<>(merchantPageQueryDTO.getPage(),
+                        merchantPageQueryDTO.getPageSize()),
+                new QueryWrapper<Merchant>().lambda()
+                    .like(StringUtils.isNotEmpty(content), Merchant::getName, content)
+                    .or().like(StringUtils.isNotEmpty(content), Merchant::getIdNumber, content)
+                    .or().like(StringUtils.isNotEmpty(content), Merchant::getPhone, content)
+                    .or().like(StringUtils.isNotEmpty(content), Merchant::getAddress, content)
+                    .orderByDesc(Merchant::getCreateTime));
+
+    }
+
+
 }
