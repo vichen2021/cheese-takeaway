@@ -1,6 +1,7 @@
 package com.cheese.interceptor;
 
 import com.cheese.constant.JwtClaimsConstant;
+import com.cheese.context.BaseContext;
 import com.cheese.properties.JwtProperties;
 import com.cheese.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -48,6 +49,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
             Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
             log.info("当前商户id：", empId);
+            BaseContext.setCurrentId(empId);
             //3、通过，放行
             return true;
         } catch (Exception ex) {

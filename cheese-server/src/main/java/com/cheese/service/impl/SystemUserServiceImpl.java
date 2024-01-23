@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.constant.MessageConstant;
 import com.cheese.constant.StatusConstant;
+import com.cheese.dto.MerchantDTO;
 import com.cheese.dto.SystemUserLoginDTO;
 import com.cheese.entity.SystemUser;
 import com.cheese.exception.AccountLockedException;
@@ -56,4 +57,5 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         }
         return systemUser;
     }
+
 }

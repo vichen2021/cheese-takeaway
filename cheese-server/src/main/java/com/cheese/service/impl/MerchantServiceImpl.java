@@ -2,14 +2,19 @@ package com.cheese.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.constant.*;
+import com.cheese.context.BaseContext;
+import com.cheese.dto.MerchantDTO;
 import com.cheese.dto.MerchantLoginDTO;
 import com.cheese.entity.Merchant;
 import com.cheese.exception.*;
 import com.cheese.mapper.MerchantMapper;
 import com.cheese.service.MerchantService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
 
 @Service
 public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> implements MerchantService
@@ -45,5 +50,29 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
         }
         return merchant;
+    }
+
+    /**
+     * 添加商户
+     *
+     * @param merchantDTO
+     * @return
+     */
+    @Override
+    public boolean addMerchant(MerchantDTO merchantDTO)
+    {
+        Merchant merchant = new Merchant();
+        BeanUtils.copyProperties(merchantDTO,merchant);
+        merchant.setStatus(StatusConstant.ENABLE);
+        merchant.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+        // 设置当前记录的创建时间和修改时间
+        merchant.setCreateTime(LocalDateTime.now());
+        merchant.setUpdateTime(LocalDateTime.now());
+
+        // 设置当前记录创建人id和修改人id
+        merchant.setCreateUser(BaseContext.getCurrentId());//TODO 目前写个假数据，后期修改
+        merchant.setUpdateUser(BaseContext.getCurrentId());
+
+       return save(merchant);
     }
 }

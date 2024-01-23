@@ -20,14 +20,14 @@ public class MerchantDTO implements Serializable
     // 用户名
     private String username;
 
-    // 密码
-    private String password;
-
     // 手机号
     private String phone;
 
     // 商家地址
     private String address;
+
+    // 商家负责人身份证号码
+    private String idNumber;
 
 
 }

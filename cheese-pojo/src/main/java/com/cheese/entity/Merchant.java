@@ -35,6 +35,9 @@ public class Merchant implements Serializable
     // 商家地址
     private String address;
 
+    // 商家负责人身份证号码
+    private String idNumber;
+
     // 商家公告
     private String announcement;
 

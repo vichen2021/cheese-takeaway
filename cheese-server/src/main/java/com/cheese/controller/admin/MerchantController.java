@@ -13,7 +13,6 @@ import com.cheese.utils.JwtUtil;
 import com.cheese.vo.MerchantLoginVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,21 +78,11 @@ public class MerchantController
         return Result.success();
     }
 
+    @PostMapping
     @Operation(summary = "添加商户")
     public Result addMerchant(@RequestBody MerchantDTO merchantDTO){
-        Merchant merchant = new Merchant();
-        // 对象属性拷贝（属性名必须一致）
-        BeanUtils.copyProperties(merchantDTO, merchant);
-        // 设置账号抓状态，默认正常状态1表示正常0表示锁定
-        merchant.setStatus(StatusConstant.ENABLE);
-        // 设置默认密码
-        merchant.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        // 设置当前记录的创建时间和修改时间
-        merchant.setCreateTime(LocalDateTime.now());
-        merchant.setUpdateTime(LocalDateTime.now());
-
-        log.info("添加商户：{}",merchant);
-        merchantService.save(merchant);
+        log.info("添加商户：{}",merchantDTO);
+        merchantService.addMerchant(merchantDTO);
         return Result.success();
     }
 }
