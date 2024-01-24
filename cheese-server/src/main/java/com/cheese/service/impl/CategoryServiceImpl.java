@@ -95,5 +95,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         //删除分类
         categoryMapper.deleteById(id);
     }
+    @Override
+    public boolean updateById(Category entity)
+    {
+
+        return super.updateById(entity);
+    }
+
 
 }

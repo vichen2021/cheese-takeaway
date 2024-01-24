@@ -18,16 +18,17 @@ public interface MerchantService extends IService<Merchant>
     Merchant login(MerchantLoginDTO merchantLoginDTO);
 
     /**
-     * 添加商户
-     * @param merchantDTO
-     * @return
-     */
-    boolean addMerchant(MerchantDTO merchantDTO);
-
-    /**
      * 商户分页查询
      * @param merchantPageQueryDTO
      * @return
      */
     IPage<Merchant> pageQuery(MerchantPageQueryDTO merchantPageQueryDTO);
+
+    /**
+     * 启用或禁用商户状态
+     * @param status
+     * @param id
+     */
+    void updateOrStop(Integer status, Long id);
+
 }

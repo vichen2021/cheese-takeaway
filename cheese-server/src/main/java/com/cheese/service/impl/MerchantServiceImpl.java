@@ -1,6 +1,7 @@
 package com.cheese.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,7 +13,6 @@ import com.cheese.dto.MerchantPageQueryDTO;
 import com.cheese.entity.Merchant;
 import com.cheese.exception.*;
 import com.cheese.mapper.MerchantMapper;
-import com.cheese.result.PageResult;
 import com.cheese.service.MerchantService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -58,29 +58,6 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
         return merchant;
     }
 
-    /**
-     * 添加商户
-     *
-     * @param merchantDTO
-     * @return
-     */
-    @Override
-    public boolean addMerchant(MerchantDTO merchantDTO)
-    {
-        Merchant merchant = new Merchant();
-        BeanUtils.copyProperties(merchantDTO,merchant);
-        merchant.setStatus(StatusConstant.ENABLE);
-        merchant.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        // 设置当前记录的创建时间和修改时间
-        merchant.setCreateTime(LocalDateTime.now());
-        merchant.setUpdateTime(LocalDateTime.now());
-
-        // 设置当前记录创建人id和修改人id
-        merchant.setCreateUser(BaseContext.getCurrentId());//TODO 目前写个假数据，后期修改
-        merchant.setUpdateUser(BaseContext.getCurrentId());
-
-       return this.save(merchant);
-    }
 
     /**
      * 商户分页查询
@@ -103,5 +80,22 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
 
     }
 
-
+    /**
+     * 启用或禁用商户状态
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void updateOrStop(Integer status, Long id)
+    {
+        LambdaUpdateWrapper<Merchant> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Merchant::getId, id);
+        Merchant merchant = Merchant.builder()
+                .status(status)
+                .updateTime(LocalDateTime.now())
+                .updateUser(BaseContext.getCurrentId())
+                .build();
+        merchantMapper.update(merchant, updateWrapper);
+    }
 }
