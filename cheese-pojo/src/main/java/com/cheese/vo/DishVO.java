@@ -1,5 +1,7 @@
 package com.cheese.vo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.cheese.entity.DishFlavor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,7 @@ public class DishVO implements Serializable {
     private Integer status;
     //更新时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
     //分类名称
     private String categoryName;

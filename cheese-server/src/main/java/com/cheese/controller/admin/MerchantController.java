@@ -101,23 +101,6 @@ public class MerchantController
         return Result.success();
     }
 
-    /**
-     * 公共字段赋值方法
-     * @param merchant
-     * @param isAdd 是否为新增
-     * @return
-     */
-    public Merchant setCurrentUserAndDate(Merchant merchant, boolean isAdd)
-    {
-        if (isAdd)
-        {
-            merchant.setCreateTime(LocalDateTime.now());
-            merchant.setCreateUser(BaseContext.getCurrentId());
-        }
-        merchant.setUpdateTime(LocalDateTime.now());
-        merchant.setUpdateUser(BaseContext.getCurrentId());
-        return merchant;
-    }
 
     @PostMapping
     @Operation(summary = "添加商户")
@@ -128,8 +111,6 @@ public class MerchantController
         BeanUtils.copyProperties(merchantDTO, merchant);
         merchant.setStatus(StatusConstant.ENABLE);
         merchant.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        // 公共字段赋值
-        merchant = setCurrentUserAndDate(merchant,true);
         merchantService.save(merchant);
         return Result.success();
     }
@@ -160,8 +141,6 @@ public class MerchantController
         log.info("更新商户信息：{}", merchantDTO);
         Merchant merchant = new Merchant();
         BeanUtils.copyProperties(merchantDTO, merchant);
-        // 公共字段赋值
-        merchant = setCurrentUserAndDate(merchant,false);
         merchantService.updateById(merchant);
 
         return Result.success();

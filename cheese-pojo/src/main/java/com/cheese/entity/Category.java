@@ -1,6 +1,8 @@
 package com.cheese.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -37,16 +39,20 @@ public class Category implements Serializable {
 
     // 创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     // 最后修改时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
     // 创建人ID
+    @TableField(value = "create_user",fill = FieldFill.INSERT)
     private Long createUser;
 
     // 最后修改人ID
+    @TableField(value = "update_user",fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
     // 关联商户ID

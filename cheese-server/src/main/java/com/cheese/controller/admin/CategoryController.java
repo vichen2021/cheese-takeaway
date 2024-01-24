@@ -77,26 +77,8 @@ public class CategoryController
     public Result update(@RequestBody CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        category = setCurrentUserAndDate(category,false);
         categoryService.updateById(category);
         return Result.success();
-    }
-    /**
-     * 公共字段赋值方法
-     * @param entity
-     * @param isAdd 是否为新增
-     * @return
-     */
-    public Category setCurrentUserAndDate(Category entity, boolean isAdd)
-    {
-        if (isAdd)
-        {
-            entity.setCreateTime(LocalDateTime.now());
-            entity.setCreateUser(BaseContext.getCurrentId());
-        }
-        entity.setUpdateTime(LocalDateTime.now());
-        entity.setUpdateUser(BaseContext.getCurrentId());
-        return entity;
     }
     /**
      * 新增商品
@@ -110,8 +92,6 @@ public class CategoryController
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
         category.setStatus(StatusConstant.ENABLE);
-        category.setMerchantId(BaseContext.getCurrentId());
-        category = setCurrentUserAndDate(category,true);
         categoryService.save(category);
         return Result.success();
     }
