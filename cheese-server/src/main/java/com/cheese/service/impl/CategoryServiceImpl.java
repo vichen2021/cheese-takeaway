@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cheese.context.BaseContext;
 import com.cheese.service.CategoryService;
 import com.cheese.constant.MessageConstant;
 import com.cheese.entity.Category;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 
 
 @Service
@@ -45,6 +47,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return this.page(new Page<>(page, pageSize), new QueryWrapper<Category>()
                 .like(StringUtils.isNotEmpty(category.getName()), "name", category.getName())
                 .eq(category.getType() != null, "type", category.getType())
+                .eq(true,"merchant_id", BaseContext.getCurrentId())
                 .orderByAsc("sort")
                 .orderByDesc("create_time")
         );
@@ -61,7 +64,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         updateWrapper.eq("id", id);
         Category category = Category.builder()
                 .status(status)
-//                .updateTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .updateUser(BaseContext.getCurrentId())
                 .build();
         categoryMapper.update(category, updateWrapper);
     }
@@ -94,12 +98,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         }
         //删除分类
         categoryMapper.deleteById(id);
-    }
-    @Override
-    public boolean updateById(Category entity)
-    {
-
-        return super.updateById(entity);
     }
 
 

@@ -1,6 +1,8 @@
 package com.cheese.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cheese.context.BaseContext;
+import com.cheese.entity.Merchant;
 import com.cheese.service.CategoryService;
 import com.cheese.constant.StatusConstant;
 import com.cheese.dto.CategoryDTO;
@@ -14,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -74,12 +77,27 @@ public class CategoryController
     public Result update(@RequestBody CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-//        category.setUpdateTime(LocalDateTime.now());
-//        category.setUpdateUser(BaseContext.getCurrentId());
+        category = setCurrentUserAndDate(category,false);
         categoryService.updateById(category);
         return Result.success();
     }
-
+    /**
+     * 公共字段赋值方法
+     * @param entity
+     * @param isAdd 是否为新增
+     * @return
+     */
+    public Category setCurrentUserAndDate(Category entity, boolean isAdd)
+    {
+        if (isAdd)
+        {
+            entity.setCreateTime(LocalDateTime.now());
+            entity.setCreateUser(BaseContext.getCurrentId());
+        }
+        entity.setUpdateTime(LocalDateTime.now());
+        entity.setUpdateUser(BaseContext.getCurrentId());
+        return entity;
+    }
     /**
      * 新增商品
      *
@@ -92,10 +110,8 @@ public class CategoryController
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
         category.setStatus(StatusConstant.ENABLE);
-//        category.setCreateTime(LocalDateTime.now());
-//        category.setUpdateTime(LocalDateTime.now());
-//        category.setCreateUser(BaseContext.getCurrentId());
-//        category.setUpdateUser(BaseContext.getCurrentId());
+        category.setMerchantId(BaseContext.getCurrentId());
+        category = setCurrentUserAndDate(category,true);
         categoryService.save(category);
         return Result.success();
     }
