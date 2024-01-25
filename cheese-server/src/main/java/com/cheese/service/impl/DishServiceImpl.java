@@ -1,6 +1,10 @@
 package com.cheese.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.enums.SqlKeyword;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.dto.DishDTO;
 import com.cheese.dto.DishPageQueryDTO;
@@ -13,6 +17,8 @@ import com.cheese.mapper.SetmealMapper;
 import com.cheese.service.DishFlavorService;
 import com.cheese.service.DishService;
 import com.cheese.vo.DishVO;
+import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.scripting.xmltags.SetSqlNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +75,22 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
     @Override
     public IPage<DishVO> dishPage(DishPageQueryDTO dishPageQueryDTO)
     {
-        return null;
+        return dishMapper.selectPageVo(
+                new Page<>(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize()),
+                new QueryWrapper<DishVO>()
+                        .like(StringUtils.isNotEmpty(dishPageQueryDTO.getName()), "d.name", dishPageQueryDTO.getName())
+                        .eq(dishPageQueryDTO.getCategoryId() != null, "d.category_id", dishPageQueryDTO.getCategoryId())
+                        .eq(dishPageQueryDTO.getStatus() != null, "d.status", dishPageQueryDTO.getStatus())
+                        .orderByAsc("d.create_time")
+        );
+//        return dishMapper.selectPageVo(
+//                new Page<>(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize()),
+//                            new LambdaQueryWrapper<DishVO>()
+//                                .like(StringUtils.isNotEmpty(dishPageQueryDTO.getName()),DishVO::getName,dishPageQueryDTO.getName())
+//                                .eq(dishPageQueryDTO.getStatus()!= null,DishVO::getStatus,dishPageQueryDTO.getStatus())
+//                                .eq(dishPageQueryDTO.getCategoryId()!= null,DishVO::getCategoryId,dishPageQueryDTO.getCategoryId())
+//                                    .orderByDesc(DishVO::getUpdateTime) // 改成上面非lambda形式不报错
+//                            );
     }
 
     /**
