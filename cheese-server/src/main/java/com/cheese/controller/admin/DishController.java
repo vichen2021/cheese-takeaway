@@ -61,6 +61,7 @@ public class DishController
     @GetMapping("/page")
     @Operation(summary ="菜品分页查询")
     public Result page(DishPageQueryDTO dishPageQueryDTO) {
+        log.info("菜品分页查询,{}",dishPageQueryDTO);
         return Result.success(dishService.dishPage(dishPageQueryDTO));
     }
 
@@ -76,7 +77,7 @@ public class DishController
     public Result delete(@RequestParam List<Long> ids) {
         dishService.deleteByIds(ids);
         //将所有的菜品缓存数据清理掉
-        cleanCache("dish_*");
+        // cleanCache("dish_*");
         return Result.success();
     }
 
@@ -103,7 +104,7 @@ public class DishController
     public Result update(@RequestBody DishDTO dishDTO) {
         dishService.updateDishAndFlavor(dishDTO);
         //将所有的菜品缓存数据清理掉
-        cleanCache("dish_*");
+//        cleanCache("dish_*");
         return Result.success();
     }
 
@@ -132,7 +133,7 @@ public class DishController
     public Result changeStatus(@PathVariable Integer status, Long id) {
         dishService.updateStatus(status, id);
         //将所有的菜品缓存数据清理掉
-        cleanCache("dish_*");
+//        cleanCache("dish_*");
         return Result.success();
     }
 
