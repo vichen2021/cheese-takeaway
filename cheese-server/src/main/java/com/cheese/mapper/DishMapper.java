@@ -10,9 +10,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @author ja
- * @ProjectName sky-take-out
- * @CreateTime 2023/7/30 19:25
+ * @author Wei Chen Guang
+ * @ProjectName cheese-takeaway
  */
 
 @Mapper

@@ -38,6 +38,12 @@ cheese:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
+  alioss:
+    endpoint: ${cheese.alioss.endpoint}
+    access-key-id: ${cheese.alioss.access-key-id}
+    access-key-secret: ${cheese.alioss.access-key-secret}
+    bucket-name: ${cheese.alioss.bucket-name}
+
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:
