@@ -116,7 +116,7 @@ public class Orders implements Serializable
     private Integer tablewareStatus;
 
     // 删除标记，null 正常 非空 已删除
-    @TableId("is_delete")
+    @TableField("is_delete")
     private LocalDateTime isDelete;
 
     // 创建时间
