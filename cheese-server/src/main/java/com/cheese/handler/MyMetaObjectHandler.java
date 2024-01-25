@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @author ja
- * @ProjectName sky-take-out
- * @CreateTime 2023/7/31 14:59
+ * @author Wei Chen Guang
+ * @ProjectName cheese-takeaway
  */
 
 @Slf4j
