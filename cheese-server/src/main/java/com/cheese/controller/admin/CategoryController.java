@@ -20,9 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author ja
- * @ProjectName sky-take-out
- * @CreateTime 2023/7/30 19:27
+ * @author Wei Chen Guang
+ * @ProjectName cheese-takeaway
  */
 @RestController("adminCategoryController")
 @Slf4j

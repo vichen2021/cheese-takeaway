@@ -47,7 +47,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return this.page(new Page<>(page, pageSize), new QueryWrapper<Category>()
                 .like(StringUtils.isNotEmpty(category.getName()), "name", category.getName())
                 .eq(category.getType() != null, "type", category.getType())
-                .eq(true,"merchant_id", BaseContext.getCurrentId())
+                //.eq(true,"merchant_id", BaseContext.getCurrentId()) // 弃用，已使用多租户插件
                 .orderByAsc("sort")
                 .orderByDesc("create_time")
         );

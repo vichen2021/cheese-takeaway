@@ -6,9 +6,8 @@ import com.cheese.entity.Category;
 
 
 /**
- * @author ja
- * @ProjectName sky-take-out
- * @CreateTime 2023/7/30 19:21
+ * @author Wei Chen Guang
+ * @ProjectName cheese-takeaway
  */
 
 public interface CategoryService extends IService<Category> {
