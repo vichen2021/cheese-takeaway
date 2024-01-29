@@ -10,6 +10,7 @@ import com.cheese.vo.DishItemVO;
 import com.cheese.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -24,6 +25,9 @@ public interface SetmealMapper extends BaseMapper<Setmeal> {
      * @param wrapper
      * @return
      */
+    @Select(" select s.*, c.name as categoryName from setmeal s " +
+            "left outer join category c " +
+            "on s.category_id = c.id ${ew.customSqlSegment}")
     IPage<SetmealVO> selectPageVO(IPage<SetmealVO> page, @Param(Constants.WRAPPER) Wrapper<SetmealVO> wrapper);
 
     /**
@@ -32,5 +36,8 @@ public interface SetmealMapper extends BaseMapper<Setmeal> {
      * @param id
      * @return
      */
+    @Select("select sd.name, sd.copies, d.image, d.description from setmeal_dish sd " +
+            "left outer join dish d on sd.dish_id = d.id " +
+            "where sd.setmeal_id = #{id}")
     List<DishItemVO> getDishWithCopies(Long id);
 }
