@@ -13,6 +13,13 @@ spring:
       password: ${cheese.datasource.password}
       type: com.alibaba.druid.pool.DruidDataSource
 
+  data:
+    redis:
+      host: ${cheese.redis.host}
+      database: ${cheese.redis.database}
+      port: ${cheese.redis.port}
+      password: ${cheese.redis.password}
+      connect-timeout: 2000
 mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
@@ -53,9 +60,12 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'default'
+    - group: 'merchant'
       paths-to-match: '/**'
-      packages-to-scan: com.cheese.controller
+      packages-to-scan: com.cheese.controller.admin
+    - group: 'user'
+      paths-to-match: '/**'
+      packages-to-scan: com.cheese.controller.user
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: true

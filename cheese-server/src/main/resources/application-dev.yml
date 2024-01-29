@@ -12,3 +12,8 @@ cheese:
     access-key-id: LTAI5tBbeouNTWp3QF9ugAys
     access-key-secret: bGZ51vmonUobFXvRun5GUPFw37IG35
     bucket-name: vichen
+  redis:
+    host: localhost
+    database: 10
+    port: 6379
+    password: 123456
