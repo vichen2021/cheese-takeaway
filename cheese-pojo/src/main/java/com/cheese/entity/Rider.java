@@ -66,6 +66,8 @@ public class Rider implements Serializable
     @TableField(value = "update_user",fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
+    // 配送员登录密码
+    private String password;
     // 备注
     private String note;
 }

@@ -56,7 +56,7 @@ public class MybatisPlusConfig
             @Override
             public boolean ignoreTable(String tableName)
             {
-                String[] ignoreTables = {"user", "system_user", "merchant", "address_book", "shopping_cart", "rider"};
+                String[] ignoreTables = {"users", "system_user", "merchant", "address_book", "shopping_cart", "rider"};
                 return Arrays.asList(ignoreTables).contains(tableName.toLowerCase());
 //                for (String ignoreName : ignoreTables)
 //                {

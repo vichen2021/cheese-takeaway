@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable
+public class Users implements Serializable
 {
 
     private static final long serialVersionUID = 1L;
@@ -64,9 +64,9 @@ public class User implements Serializable
     @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    // 创建人ID
-    @TableField(value = "create_user",fill = FieldFill.INSERT)
-    private Long createUser;
+//    // 创建人ID
+//    @TableField(value = "create_user",fill = FieldFill.INSERT)
+//    private Long createUser;
 
     // 最后修改人ID
         @TableField(value = "update_user",fill = FieldFill.INSERT_UPDATE)
