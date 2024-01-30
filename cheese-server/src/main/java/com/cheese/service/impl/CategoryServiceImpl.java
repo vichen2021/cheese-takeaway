@@ -36,7 +36,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private SetmealMapper setmealMapper;
 
     /**
-     * 商品分类
+     * 分类分页查询
      * @param categoryPageQueryDTO
      * @return
      */
@@ -54,7 +54,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     /**
-     * 启用或禁用商品状态
+     * 启用或禁用分类状态
      *
      * @param status
      * @param id
@@ -64,8 +64,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         updateWrapper.eq("id", id);
         Category category = Category.builder()
                 .status(status)
-                .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
                 .build();
         categoryMapper.update(category, updateWrapper);
     }

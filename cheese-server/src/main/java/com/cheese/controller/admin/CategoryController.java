@@ -38,13 +38,13 @@ public class CategoryController
     private CategoryMapper categoryMapper;
 
     /**
-     * 商品分类
+     * 商品分页
      *
      * @param categoryPageQueryDTO
      * @return
      */
     @GetMapping("/page")
-    @Operation(summary = "商品分类")
+    @Operation(summary = "分类分页")
     public Result page(CategoryPageQueryDTO categoryPageQueryDTO) {
         return Result.success(categoryService.getPage(categoryPageQueryDTO));
     }
@@ -65,13 +65,13 @@ public class CategoryController
     }
 
     /**
-     * 更新商品分类
+     * 更新分类信息
      *
      * @param categoryDTO
      * @return
      */
     @PutMapping
-    @Operation(summary ="更新商品信息")
+    @Operation(summary ="更新分类")
     public Result update(@RequestBody CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
@@ -79,7 +79,7 @@ public class CategoryController
         return Result.success();
     }
     /**
-     * 新增商品
+     * 新增分类
      *
      * @param categoryDTO
      * @return
