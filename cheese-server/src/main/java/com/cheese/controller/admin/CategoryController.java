@@ -2,6 +2,7 @@ package com.cheese.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cheese.context.BaseContext;
+import com.cheese.dto.CategoryPageQueryDTO;
 import com.cheese.entity.Merchant;
 import com.cheese.service.CategoryService;
 import com.cheese.constant.StatusConstant;
@@ -39,15 +40,13 @@ public class CategoryController
     /**
      * 商品分类
      *
-     * @param page
-     * @param pageSize
-     * @param category
+     * @param categoryPageQueryDTO
      * @return
      */
     @GetMapping("/page")
     @Operation(summary = "商品分类")
-    public Result page(int page, int pageSize, Category category) {
-        return Result.success(categoryService.getPage(page, pageSize, category));
+    public Result page(CategoryPageQueryDTO categoryPageQueryDTO) {
+        return Result.success(categoryService.getPage(categoryPageQueryDTO));
     }
 
     /**

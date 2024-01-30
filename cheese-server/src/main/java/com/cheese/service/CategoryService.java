@@ -2,6 +2,7 @@ package com.cheese.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cheese.dto.CategoryPageQueryDTO;
 import com.cheese.entity.Category;
 
 
@@ -15,12 +16,10 @@ public interface CategoryService extends IService<Category> {
     /**
      * 商品分类
      *
-     * @param page
-     * @param pageSize
-     * @param category
+     * @param categoryPageQueryDTO
      * @return
      */
-    IPage<Category> getPage(int page, int pageSize, Category category);
+    IPage<Category> getPage(CategoryPageQueryDTO categoryPageQueryDTO);
 
     /**
      * 启用或禁用商品状态

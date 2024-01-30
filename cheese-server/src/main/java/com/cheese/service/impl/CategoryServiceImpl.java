@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.context.BaseContext;
+import com.cheese.dto.CategoryPageQueryDTO;
 import com.cheese.service.CategoryService;
 import com.cheese.constant.MessageConstant;
 import com.cheese.entity.Category;
@@ -36,17 +37,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     /**
      * 商品分类
-     *
-     * @param page
-     * @param pageSize
-     * @param category
+     * @param categoryPageQueryDTO
      * @return
      */
     @Override
-    public IPage<Category> getPage(int page, int pageSize, Category category) {
-        return this.page(new Page<>(page, pageSize), new QueryWrapper<Category>()
-                .like(StringUtils.isNotEmpty(category.getName()), "name", category.getName())
-                .eq(category.getType() != null, "type", category.getType())
+    public IPage<Category> getPage(CategoryPageQueryDTO categoryPageQueryDTO) {
+        return this.page(
+                new Page<>(categoryPageQueryDTO.getPage(),categoryPageQueryDTO.getPageSize()),
+                new QueryWrapper<Category>()
+                .like(StringUtils.isNotEmpty(categoryPageQueryDTO.getName()), "name", categoryPageQueryDTO.getName())
+                .eq(categoryPageQueryDTO.getType() != null, "type", categoryPageQueryDTO.getType())
                 //.eq(true,"merchant_id", BaseContext.getCurrentId()) // 弃用，已使用多租户插件
                 .orderByAsc("sort")
                 .orderByDesc("create_time")
