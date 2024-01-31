@@ -18,7 +18,7 @@ spring:
       host: ${cheese.redis.host}
       database: ${cheese.redis.database}
       port: ${cheese.redis.port}
-      password: ${cheese.redis.password}
+#      password: ${cheese.redis.password}
       connect-timeout: 2000
 mybatis:
   #mapper配置文件

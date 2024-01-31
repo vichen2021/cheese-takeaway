@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ShopController
 {
-    public static final String KEY = "SHOP_STATUS_"+ BaseContext.getCurrentId();
+    public static String KEY = "SHOP_STATUS_";
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -33,14 +33,16 @@ public class ShopController
     @PutMapping("/{status}")
     @Operation(summary = "设置店铺的营业状态")
     public Result setStatus(@PathVariable Integer status){
+        String currentMerchantKey = KEY+BaseContext.getCurrentId();
         log.info("设置店铺的营业状态为：{}",status == 1 ? "营业中" : "打烊中");
-        redisTemplate.opsForValue().set(KEY,status);
+        redisTemplate.opsForValue().set(currentMerchantKey,status);
         return Result.success();
     }
     @GetMapping("/status")
     @Operation(summary = "获取店铺的营业状态")
     public Result<Integer> getStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(KEY);
+        String currentMerchantKey = KEY+BaseContext.getCurrentId();
+        Integer status = (Integer) redisTemplate.opsForValue().get(currentMerchantKey);
         log.info("获取到店铺的营业状态为：{}",status == 1 ? "营业中" : "打烊中");
         return Result.success(status);
     }
