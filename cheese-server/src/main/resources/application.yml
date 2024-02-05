@@ -44,6 +44,9 @@ cheese:
     admin-ttl: 86400000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    user-secret-key: cheeeese
+    user-ttl: 86400000
+    user-token-name: authentication
 
   alioss:
     endpoint: ${cheese.alioss.endpoint}
@@ -51,6 +54,9 @@ cheese:
     access-key-secret: ${cheese.alioss.access-key-secret}
     bucket-name: ${cheese.alioss.bucket-name}
 
+  wechat:
+    appid: ${cheese.wechat.appid}
+    secret: ${cheese.wechat.secret}
 # springdoc-openapi项目配置
 springdoc:
   swagger-ui:

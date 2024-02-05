@@ -47,7 +47,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 new QueryWrapper<Category>()
                 .like(StringUtils.isNotEmpty(categoryPageQueryDTO.getName()), "name", categoryPageQueryDTO.getName())
                 .eq(categoryPageQueryDTO.getType() != null, "type", categoryPageQueryDTO.getType())
-                //.eq(true,"merchant_id", BaseContext.getCurrentId()) // 弃用，已使用多租户插件
+                .eq(true,"merchant_id", BaseContext.getCurrentId())
                 .orderByAsc("sort")
                 .orderByDesc("create_time")
         );

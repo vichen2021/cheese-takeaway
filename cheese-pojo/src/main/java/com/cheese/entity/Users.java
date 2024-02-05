@@ -56,7 +56,6 @@ public class Users implements Serializable
 
     // 创建时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     // 最后修改时间
@@ -64,12 +63,8 @@ public class Users implements Serializable
     @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-//    // 创建人ID
-//    @TableField(value = "create_user",fill = FieldFill.INSERT)
-//    private Long createUser;
-
     // 最后修改人ID
-        @TableField(value = "update_user",fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_user",fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
 
     // 备注

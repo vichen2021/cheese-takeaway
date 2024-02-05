@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@RestController("adminMerchantController")
 @RequestMapping("/admin/merchant")
 @Slf4j
 @Tag(name = "商户相关接口")
@@ -74,6 +74,12 @@ public class MerchantController
                 .build();
 
         return Result.success(merchantLoginVO);
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "退出登录")
+    public Result<String> logout() {
+        return Result.success();
     }
 
     @DeleteMapping("/{id}")
@@ -129,6 +135,15 @@ public class MerchantController
     {
         log.info("根据id查询商户信息，{}", id);
         Merchant merchant = merchantService.getById(id);
+        // 防止密码泄露
+        merchant.setPassword("*****");
+        return Result.success(merchant);
+    }
+    @GetMapping("/detail")
+    @Operation(summary = "查询当前商户信息")
+    public Result<Merchant> getByCurrentId()
+    {
+        Merchant merchant = merchantService.getById(BaseContext.getCurrentId());
         // 防止密码泄露
         merchant.setPassword("*****");
         return Result.success(merchant);

@@ -2,6 +2,7 @@ package com.cheese.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cheese.dto.UserLoginDTO;
 import com.cheese.dto.UserPageQueryDTO;
 import com.cheese.entity.Users;
 
@@ -26,4 +27,20 @@ public interface UserService extends IService<Users> {
      * @param id
      */
     void updateOrStop(Integer status, Long id);
+
+    /**
+     * 用户登录
+     *
+     * @param userLoginDTO
+     * @return
+     */
+    Users login(UserLoginDTO userLoginDTO);
+
+//    /**
+//     * 调用微信接口服务，获取微信用户的openid
+//     *
+//     * @param code
+//     * @return
+//     */
+//    String getOpenid(String code);
 }

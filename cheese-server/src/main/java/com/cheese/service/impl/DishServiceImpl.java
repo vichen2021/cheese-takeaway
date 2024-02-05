@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.constant.MessageConstant;
 import com.cheese.constant.StatusConstant;
+import com.cheese.context.BaseContext;
 import com.cheese.dto.DishDTO;
 import com.cheese.dto.DishPageQueryDTO;
 import com.cheese.entity.Dish;
@@ -61,6 +62,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
     {
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
+        dish.setMerchantId(BaseContext.getCurrentId());
         //向菜品表添加一条数据
         dishMapper.insert(dish);
 
@@ -86,6 +88,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
                 new Page<>(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize()),
                 new QueryWrapper<DishVO>()
                         .like(StringUtils.isNotEmpty(dishPageQueryDTO.getName()), "d.name", dishPageQueryDTO.getName())
+                        .eq(BaseContext.getCurrentId() != null, "d.merchant_id", BaseContext.getCurrentId())
                         .eq(dishPageQueryDTO.getCategoryId() != null, "d.category_id", dishPageQueryDTO.getCategoryId())
                         .eq(dishPageQueryDTO.getStatus() != null, "d.status", dishPageQueryDTO.getStatus())
                         .orderByAsc("d.create_time")

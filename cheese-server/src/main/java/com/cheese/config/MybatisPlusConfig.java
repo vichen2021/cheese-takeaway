@@ -34,39 +34,41 @@ public class MybatisPlusConfig
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor()
     {
+
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler()
-        {
-
-            // 设置当前租户Id
-            @Override
-            public Expression getTenantId()
-            {
-                return new LongValue(BaseContext.getCurrentId());
-            }
-
-            @Override
-            public String getTenantIdColumn()
-            {
-                // 对应数据库租户ID的列名
-                return "merchant_id";
-            }
-
-            // 这是 default 方法,默认返回 false 表示所有表都需要拼多租户条件
-            @Override
-            public boolean ignoreTable(String tableName)
-            {
-                String[] ignoreTables = {"users", "system_user", "merchant", "address_book", "shopping_cart", "rider"};
-                return Arrays.asList(ignoreTables).contains(tableName.toLowerCase());
-//                for (String ignoreName : ignoreTables)
-//                {
-//                    if (!ignoreName.equalsIgnoreCase(tableName))
-//                    {
-//                        return false;
-//                    }
-//                }
-            }
-        }));
+        // 小程序使用时与多租户插件不兼容，弃用
+//        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler()
+//        {
+//
+//            // 设置当前租户Id
+//            @Override
+//            public Expression getTenantId()
+//            {
+//                return new LongValue(BaseContext.getCurrentId());
+//            }
+//
+//            @Override
+//            public String getTenantIdColumn()
+//            {
+//                // 对应数据库租户ID的列名
+//                return "merchant_id";
+//            }
+//
+//            // 这是 default 方法,默认返回 false 表示所有表都需要拼多租户条件
+//            @Override
+//            public boolean ignoreTable(String tableName)
+//            {
+//                String[] ignoreTables = {"users", "system_user", "merchant", "address_book", "shopping_cart", "rider"};
+//                return Arrays.asList(ignoreTables).contains(tableName.toLowerCase());
+////                for (String ignoreName : ignoreTables)
+////                {
+////                    if (!ignoreName.equalsIgnoreCase(tableName))
+////                    {
+////                        return false;
+////                    }
+////                }
+//            }
+//        }));
 
         // 针对 update 和 delete 语句 作用: 阻止恶意的全表更新删除
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());

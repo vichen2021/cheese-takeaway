@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cheese.constant.MessageConstant;
 import com.cheese.constant.StatusConstant;
+import com.cheese.context.BaseContext;
 import com.cheese.dto.SetmealDTO;
 import com.cheese.dto.SetmealPageQueryDTO;
 import com.cheese.entity.Dish;
@@ -64,6 +65,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
                 new QueryWrapper<SetmealVO>()
                         .like(StringUtils.isNotEmpty(setmealPageQueryDTO.getName()), "s.name", setmealPageQueryDTO.getName())
                         .eq(setmealPageQueryDTO.getCategoryId() != null, "s.category_id", setmealPageQueryDTO.getCategoryId())
+                        .eq(BaseContext.getCurrentId() != null, "s.merchant_id", BaseContext.getCurrentId())
                         .eq(setmealPageQueryDTO.getStatus() != null, "s.status", setmealPageQueryDTO.getStatus())
                         .orderByAsc("s.create_time")
         );
@@ -79,13 +81,15 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         //添加套餐进入套餐表
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
+        setmeal.setMerchantId(BaseContext.getCurrentId());
         setmealMapper.insert(setmeal);
         //保存套餐和菜品的关联关系进入关联表
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         if (setmealDishes != null && setmealDishes.size() > 0) {
             //保存套餐的id
             //不保存dish的id的原因是因为setmeal对象是new出来的，需要设置，而前端传来的有dish的id，所以不需要再设置
-            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()));
+            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()) );
+            setmealDishes.forEach(setmealDish -> setmealDish.setMerchantId(BaseContext.getCurrentId()));
         }
         setmealDishService.saveBatch(setmealDishes);
     }
@@ -102,6 +106,7 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         if (status == StatusConstant.ENABLE) {
             List<SetmealDish> setmealDishesWithDishId = setmealDishMapper.selectList(new LambdaQueryWrapper<SetmealDish>()
                     .select(SetmealDish::getDishId)
+                    .eq(BaseContext.getCurrentId() != null, SetmealDish::getMerchantId, BaseContext.getCurrentId())
                     .eq(SetmealDish::getSetmealId, id)
             );
 //            System.out.println(setmealDishesWithDishId);
