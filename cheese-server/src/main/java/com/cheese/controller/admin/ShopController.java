@@ -33,7 +33,7 @@ public class ShopController
     @PutMapping("/{status}")
     @Operation(summary = "设置店铺的营业状态")
     public Result setStatus(@PathVariable Integer status){
-        String currentMerchantKey = KEY+BaseContext.getCurrentId();
+        String currentMerchantKey = KEY+(Long)BaseContext.getCurrentId();
         log.info("设置店铺的营业状态为：{}",status == 1 ? "营业中" : "打烊中");
         redisTemplate.opsForValue().set(currentMerchantKey,status);
         return Result.success();
@@ -41,7 +41,7 @@ public class ShopController
     @GetMapping("/status")
     @Operation(summary = "获取店铺的营业状态")
     public Result<Integer> getStatus(){
-        String currentMerchantKey = KEY+BaseContext.getCurrentId();
+        String currentMerchantKey = KEY+(Long)BaseContext.getCurrentId();
         Integer status = (Integer) redisTemplate.opsForValue().get(currentMerchantKey);
         log.info("获取到店铺的营业状态为：{}",status == 1 ? "营业中" : "打烊中");
         return Result.success(status);

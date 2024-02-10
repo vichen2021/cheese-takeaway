@@ -20,7 +20,7 @@ public class SystemUserLoginVO implements Serializable
 {
     @Schema(description = "管理员Id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
 
     @Schema(description = "管理员用户名")
     private String userName;

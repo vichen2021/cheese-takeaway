@@ -117,7 +117,7 @@ public class CategoryController
     public Result<List<Category>> list(Integer type) {
         return Result.success(categoryMapper.selectList(new QueryWrapper<Category>()
                 .eq("type", type)
-                .eq(BaseContext.getCurrentId() != null, "merchant_id", BaseContext.getCurrentId())
+                .eq((Long)BaseContext.getCurrentId() != null, "merchant_id", (Long)BaseContext.getCurrentId())
                 .orderByAsc("sort")
                 .orderByDesc("create_time")
         ));

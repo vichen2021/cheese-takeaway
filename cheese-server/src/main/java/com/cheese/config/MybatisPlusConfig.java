@@ -44,7 +44,7 @@ public class MybatisPlusConfig
 //            @Override
 //            public Expression getTenantId()
 //            {
-//                return new LongValue(BaseContext.getCurrentId());
+//                return new LongValue((Long)BaseContext.getCurrentId());
 //            }
 //
 //            @Override

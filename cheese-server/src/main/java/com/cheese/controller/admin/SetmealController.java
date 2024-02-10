@@ -41,6 +41,7 @@ public class SetmealController
      */
     @PostMapping
     @Operation(summary = "新增套餐")
+    @CacheEvict(cacheNames = "setmealCache",key = "#setmealDTO.categoryId")//key: setmealCache::100
     public Result saveSetmeal(@RequestBody SetmealDTO setmealDTO) {
         log.info("新增套餐：{}",setmealDTO);
         setmealService.saveSetmeal(setmealDTO);
@@ -54,6 +55,7 @@ public class SetmealController
      */
     @GetMapping("/{id}")
     @Operation(summary = "根据id查询套餐")
+    @CacheEvict(cacheNames = "setmealCache",allEntries = true)
     public Result<SetmealVO> getById(@PathVariable Long id) {
         return Result.success(setmealService.getAllById(id));
     }

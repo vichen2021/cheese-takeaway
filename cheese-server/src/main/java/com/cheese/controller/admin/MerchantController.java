@@ -143,7 +143,7 @@ public class MerchantController
     @Operation(summary = "查询当前商户信息")
     public Result<Merchant> getByCurrentId()
     {
-        Merchant merchant = merchantService.getById(BaseContext.getCurrentId());
+        Merchant merchant = merchantService.getById((Long)BaseContext.getCurrentId());
         // 防止密码泄露
         merchant.setPassword("*****");
         return Result.success(merchant);

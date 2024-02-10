@@ -18,7 +18,7 @@ public class SystemUser implements Serializable
 {
     // 用户ID
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
 
     // 用户姓名
     private String name;

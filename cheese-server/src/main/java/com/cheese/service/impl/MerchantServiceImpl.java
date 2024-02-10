@@ -94,7 +94,7 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, Merchant> i
         Merchant merchant = Merchant.builder()
                 .status(status)
                 .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
+                .updateUser((Long)BaseContext.getCurrentId())
                 .build();
         merchantMapper.update(merchant, updateWrapper);
     }
