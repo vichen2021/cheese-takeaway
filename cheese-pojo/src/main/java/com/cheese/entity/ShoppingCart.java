@@ -55,6 +55,9 @@ public class ShoppingCart implements Serializable
     //图片
     private String image;
 
+    // 商户Id
+    private Long merchantId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;

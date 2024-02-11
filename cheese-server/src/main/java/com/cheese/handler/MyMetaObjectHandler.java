@@ -20,12 +20,18 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         log.info("start insert");
-        metaObject.setValue("createTime", LocalDateTime.now());
+        if(metaObject.hasGetter("createTime")){
+            metaObject.setValue("createTime", LocalDateTime.now());
+        }
         if(metaObject.hasGetter("createUser")){
             metaObject.setValue("createUser", (Long)BaseContext.getCurrentId());
         }
-        metaObject.setValue("updateTime", LocalDateTime.now());
-        metaObject.setValue("updateUser", (Long)BaseContext.getCurrentId());
+        if(metaObject.hasGetter("updateTime")){
+            metaObject.setValue("updateTime", LocalDateTime.now());
+        }
+        if(metaObject.hasGetter("updateUser")){
+            metaObject.setValue("updateUser", (Long)BaseContext.getCurrentId());
+        }
     }
 
     @Override
