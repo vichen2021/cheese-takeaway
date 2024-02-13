@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,12 +37,14 @@ public class MerchantController
 
     private final JwtProperties jwtProperties;
 
-
+    private final RedisTemplate redisTemplate;
+    public static String KEY = "SHOP_STATUS_";
     @Autowired
-    public MerchantController(MerchantService merchantService, JwtProperties jwtProperties)
+    public MerchantController(MerchantService merchantService, JwtProperties jwtProperties,RedisTemplate redisTemplate)
     {
         this.merchantService = merchantService;
         this.jwtProperties = jwtProperties;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -117,6 +120,11 @@ public class MerchantController
         BeanUtils.copyProperties(merchantDTO, merchant);
         merchant.setStatus(StatusConstant.ENABLE);
         merchant.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+        // 设置店铺状态为休息中
+        String currentMerchantKey = KEY+(Long)BaseContext.getCurrentId();
+        log.info("设置店铺的营业状态为：打烊中");
+        redisTemplate.opsForValue().set(currentMerchantKey,0);
+
         merchantService.save(merchant);
         return Result.success();
     }
