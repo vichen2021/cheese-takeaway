@@ -32,9 +32,6 @@ public class AddressBook implements Serializable {
     // 收货人
     private String consignee;
 
-    // 性别
-    private String sex;
-
     // 手机号
     private String phone;
 
@@ -60,5 +57,5 @@ public class AddressBook implements Serializable {
     private String detail;
 
     // 是否默认地址，1是 0否
-    private Boolean isDefault;
+    private Integer isDefault;
 }
